@@ -72,20 +72,6 @@ portfolio-website/
 └── README.md
 ```
 
----
-
-## Featured Projects
-
-**Air Pollution in India — 2024**
-Interactive Power BI dashboard analyzing AQI, PM2.5, PM10 across major Indian cities.
-- GitHub: https://github.com/ayushcmd/AQI-PowerBI-Dashboard
-- Live: https://app.powerbi.com/links/aZY0sC6VfJ?ctid=a57f7d92-038e-4d4c-8265-7cd2beb33b34&pbi_source=linkShare
-
-**Personal Portfolio Website**
-This site — built from scratch with HTML, CSS & JS.
-- Live: https://ayushcmd.github.io/portfolio-website/
-
----
 
 ## Contact
 
