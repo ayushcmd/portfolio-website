@@ -6,10 +6,8 @@ Personal portfolio website of **Ayush Raj**, a 2nd year undergraduate at **IIT P
 
 ---
 
-## Live Preview
-
-Hosted on **GitHub Pages**
-🔗 https://ayushcmd.github.io/portfolio-website/
+## 🌐 Live Demo
+Check out the live site: [Visit Portfolio](https://ayushcmd.github.io/portfolio-website/)
 
 ---
 
