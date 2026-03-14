@@ -14,10 +14,10 @@
 </head>
 <body>
 
+<div id="scroll-progress"></div>
 <div id="cursor-dot"></div>
 <div id="cursor-ring"></div>
-<div id="grid-bg"></div>
-<div id="glow-blob"></div>
+<canvas id="ra-canvas"></canvas>
 <div class="mobile-header">
   <div class="mobile-brand">AR</div>
   <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
@@ -71,6 +71,13 @@
       <div class="stat-chip"><div class="stat-value">2+</div><div class="stat-label">Projects</div></div>
       <div class="stat-chip"><div class="stat-value">∞</div><div class="stat-label">Curiosity</div></div>
     </div>
+    <div class="keyboard-hint" id="keyboard-hint">press <kbd>1</kbd>–5 to navigate</div>
+    <div class="github-activity" id="github-activity">
+      <div class="gh-activity-title">// recent activity</div>
+      <div class="gh-events" id="gh-events">
+        <div class="gh-loading">fetching commits<span class="typewriter-cursor" style="margin-left:4px"></span></div>
+      </div>
+    </div>
    
 </div>  
   </section>
@@ -81,11 +88,15 @@
       <div class="about-left">
         <h2>Solving problems<br>that <em>matter.</em></h2>
         <div class="about-body">
-          <p>I'm a Computer Science & Data Analytics undergraduate at IIT Patna focused on building systems that turn data into meaningful insights.</p>
-          <p> My interests sit at the intersection of software engineering, data analysis, and machine learning — where clean code meets real-world decision making. I enjoy designing tools, dashboards, and analytical systems that help people understand complex data clearly.</p>
-          <p> Recently I've been working on data visualization projects, analytical dashboards, and small full-stack tools, while continuing to strengthen my foundations in algorithms, systems, and machine learning.</p>
-          <p> I’m naturally curious about how technology works at a deeper level. I enjoy learning new tools, experimenting with emerging technologies, and continuously expanding my technical understanding through hands-on projects.</p>
-          <p> Outside of coding I enjoy cricket, badminton, and exploring topics like economics, environmental data, and global systems. I'm also interested in learning about world languages and cultures, and I enjoy studying languages such as Japanese and Spanish to better understand different societies and perspectives.</p>
+          <p>CS &amp; Data Analytics undergraduate at IIT Patna (CPI 8.7) building systems at the intersection of <strong>software engineering, machine learning, and data analysis</strong>. I design tools that turn complex data into clear, actionable insight.</p>
+          <p>Recently shipped a Dollar Hegemony analysis system (XGBoost + LSTM + Transformer), a full-stack India Crime Analytics platform, and an AI fitness tracker — FitoGlobe. Always building something. Outside of tech, I follow cricket, dig into financial data, and keep a close eye on global markets.</p>
+        </div>
+        <div class="interest-list" style="margin-top:20px;">
+          <span class="interest-tag">Machine Learning</span>
+          <span class="interest-tag">Data Visualization</span>
+          <span class="interest-tag">Full-Stack Dev</span>
+          <span class="interest-tag">Financial Data</span>
+          <span class="interest-tag">Open Source</span>
         </div>
         
       </div>
@@ -105,8 +116,8 @@
           <div class="academic-card-title">// academic participation</div>
           <div class="academic-rows">
             <div class="academic-row" style="flex-direction:column;align-items:flex-start;gap:6px">
-              <span class="val" style="font-size:.8rem">Animal Welfare Tracking System</span>
-              <span class="key" style="font-size:.7rem">Capstone Project · Sem 2 · Team</span>
+              <span class="val" style="font-size:.8rem">ML-Powered Wildlife Analytics System</span>
+              <span class="key" style="font-size:.7rem">Capstone Project · Sem 2 · Python + Data Pipeline</span>
             </div>
             <div class="academic-row" style="flex-direction:column;align-items:flex-start;gap:6px">
               <span class="val" style="font-size:.8rem">Hackathon Participant</span>
@@ -116,7 +127,6 @@
         </div>
       </div>
     </div>
-    <a href="#" class="btn-ghost" data-section="home" style="margin-top:40px;">← Back to Home</a>
   </section>
   <section id="skills" class="section">
     <div class="section-label">Technical skills</div>
@@ -134,9 +144,9 @@
           <div class="skill-panel-title">Programming Foundations</div>
           <div class="skill-panel-desc">Core concepts that underpin everything — applied across problem-solving, development, and system design.</div>
         <div class="skill-tag-grid">
-          <div class="skill-tag" data-tooltip="Sem 1 2024&#10 Core of C++ coursework">Object-Oriented Programming</div>
-          <div class="skill-tag" data-tooltip="Sem 2 2025&#10 Arrays, stacks, queues & trees in Data Structures course">Data Structures</div>
-          <div class="skill-tag" data-tooltip="Sem 3 2025&#10 Sorting, searching & algorithm design principles">Algorithms</div> 
+          <div class="skill-tag" data-tooltip="Sem 1 2024&#10 Core of C++ coursework" data-level="">Object-Oriented Programming </div>
+          <div class="skill-tag" data-tooltip="Sem 2 2025&#10 Arrays, stacks, queues & trees in Data Structures course" data-level="">Data Structures</div>
+          <div class="skill-tag" data-tooltip="Sem 3 2025&#10 Sorting, searching & algorithm design principles" data-level="">Algorithms</div> 
           <div class="skill-tag" data-tooltip="Sem 3 2025&#10 Time & space complexity analysis of algorithms">Complexity Analysis</div>
           <div class="skill-tag" data-tooltip="Sem 2 2025&#10 Matrix operations and vector spaces for ML foundations">Linear Algebra</div>
           <div class="skill-tag" data-tooltip="Sem 1 · 2 · 3 2025&#10   Probability distributions and statistical inference">Probabaility & Statistics</div>
@@ -148,16 +158,20 @@
           <div class="skill-panel-title">Languages &amp; Frameworks</div>
           <div class="skill-panel-desc">Languages used across data work, backend logic, and frontend interfaces.</div>
           <div class="skill-tag-grid">
-          <div class="skill-tag" data-tooltip="Sem 1 · 2024&#10;Primary language for data analysis and ML coursework">Python</div>
-          <div class="skill-tag" data-tooltip="Sem 1 · 2024&#10;OOP concepts and competitive programming">C++</div>
+          <div class="skill-tag" data-tooltip="Sem 1 · 2024&#10;Primary language for data analysis and ML coursework" data-level="">Python</div>
+          <div class="skill-tag" data-tooltip="Sem 1 · 2024&#10;OOP concepts and competitive programming" data-level="">C++</div>
           <div class="skill-tag" data-tooltip="Self-taught · 2025&#10;Statistical computing and data analysis">R</div>
           <div class="skill-tag" data-tooltip="Sem 4 · 2026&#10;Relational database queries and data management">SQL</div>
           <div class="skill-tag" data-tooltip="Sem 4 · 2026&#10;DOM manipulation and client-side logic">JavaScript</div>
-          <div class="skill-tag" data-tooltip="Sem 4 · 2026&#10;Backend development and REST APIs">Node.js</div>
-          <div class="skill-tag" data-tooltip="Self-taught · 2026&#10;Component-based frontend development">React</div>
+          <div class="skill-tag" data-tooltip="Sem 4 · 2026&#10;Backend development and REST APIs" data-level="">Node.js</div>
+          <div class="skill-tag" data-tooltip="Self-taught · 2026&#10;Component-based frontend development" data-level="">React </div>
           <div class="skill-tag" data-tooltip="Sem 4 · 2026&#10;NoSQL database and document-based storage">MongoDB</div>
           <div class="skill-tag" data-tooltip="Sem 4 · 2026&#10;Semantic structure for web interfaces">HTML</div>
           <div class="skill-tag" data-tooltip="Sem 4 · 2026&#10;Responsive design and UI styling">CSS</div>
+          <div class="skill-tag" data-tooltip="2026&#10;Utility-first CSS framework used in FitoGlobe">Tailwind CSS</div>
+          <div class="skill-tag" data-tooltip="2026&#10;Minimal Node.js framework for REST APIs">Express.js</div>
+          <div class="skill-tag" data-tooltip="2026&#10;Type-safe ORM for PostgreSQL — used in FitoGlobe">Prisma ORM</div>
+          <div class="skill-tag" data-tooltip="2026&#10;Relational database — production DB for FitoGlobe">PostgreSQL</div>
         </div>
          
         </div>
@@ -180,8 +194,8 @@
           <div class="skill-panel-title">Tools &amp; Ecosystem</div>
           <div class="skill-panel-desc">Supporting toolchain for version control, data visualization, and systems work.</div>
           <div class="skill-tag-grid">
-          <div class="skill-tag" data-tooltip="2024–2026&#10;Primary development environment">VS Code</div>
-          <div class="skill-tag" data-tooltip="2024–2026&#10;Version control for projects">Git</div>
+          <div class="skill-tag" data-tooltip="2024–2026&#10;Primary development environment" data-level="">VS Code </div>
+          <div class="skill-tag" data-tooltip="2024–2026&#10;Version control for projects" data-level="">Git</div>
           <div class="skill-tag" data-tooltip="2024–2026&#10;Code hosting and collaboration">GitHub</div>
           <div class="skill-tag" data-tooltip="2025–2026&#10;Hosting static websites and portfolios">GitHub Pages</div>
           <div class="skill-tag" data-tooltip="2026&#10;Frontend deployment and hosting platform">Vercel</div>
@@ -193,17 +207,25 @@
           <div class="skill-tag" data-tooltip="2025–2026&#10;Numerical computing with arrays">NumPy</div>
           <div class="skill-tag" data-tooltip="2025–2026&#10;Data manipulation and analysis">Pandas</div>
           <div class="skill-tag" data-tooltip="2025–2026&#10;Machine learning models and utilities">Scikit-learn</div>
-          <div class="skill-tag" data-tooltip="2025–2026&#10;Deep learning framework">TensorFlow</div>
+          <div class="skill-tag" data-tooltip="2025–2026&#10;Deep learning framework" data-level="">TensorFlow</div>
           <div class="skill-tag" data-tooltip="2025–2026&#10;High-level neural network API">Keras</div>
           <div class="skill-tag" data-tooltip="2025–2026&#10;Data visualization and plotting">Matplotlib</div>
-          <div class="skill-tag" data-tooltip="2024–2026&#10;Interactive dashboards and analytics">Power BI</div>
+          <div class="skill-tag" data-tooltip="2024–2026&#10;Interactive dashboards and analytics" data-level="">Power BI</div>
           <div class="skill-tag" data-tooltip="2025–2026&#10;Data modeling and expressions in Power BI">DAX</div>
           <div class="skill-tag" data-tooltip="2025–2026&#10;Relational database queries and schema design">Oracle SQL</div>
+          <div class="skill-tag" data-tooltip="2025–2026&#10;Deep learning framework — LSTM & Transformer models in Dollar Hegemony">PyTorch</div>
+          <div class="skill-tag" data-tooltip="2025–2026&#10;Gradient boosting — core model in Dollar Hegemony pipeline">XGBoost</div>
+          <div class="skill-tag" data-tooltip="2025–2026&#10;Model explainability — feature importance per BRICS country">SHAP</div>
+          <div class="skill-tag" data-tooltip="2025–2026&#10;Interactive multi-tab dashboard — Dollar Hegemony live demo">Plotly Dash</div>
+          <div class="skill-tag" data-tooltip="2025–2026&#10;REST API backend — Dollar Hegemony prediction endpoints">FastAPI</div>
+          <div class="skill-tag" data-tooltip="2025–2026&#10;Containerized deployment — Dollar Hegemony API & dashboard">Docker</div>
+          <div class="skill-tag" data-tooltip="2026&#10;React charting library — India Crime Analytics dashboards">Recharts</div>
+          <div class="skill-tag" data-tooltip="2026&#10;Canvas-based charts — India Crime Analytics visualizations">Chart.js</div>
+          <div class="skill-tag" data-tooltip="2026&#10;Cloud-hosted MongoDB — India Crime Analytics backend">MongoDB Atlas</div>
        </div>
         </div>
       </div>
     </div>
-    <a href="#" class="btn-ghost" data-section="home" style="margin-top:40px;">← Back to Home</a>
   </section>
   <section id="projects" class="section">
     <div class="section-label"> projects</div>
@@ -246,6 +268,32 @@
         </div>
       </div>
 
+      <div class="project-item">
+        <div>
+          <h3>India Crime Analytics Dashboard</h3>
+          <p class="project-desc">Crime intelligence platform built on NCRB data — 755,380+ crimes tracked across 28 states + UTs spanning 7 years. Features 11 analytics modules: interactive SVG India map color-coded by crime risk, trend analysis, state report cards, and side-by-side state comparisons. Includes Groq AI chatbot for natural-language crime queries and an emergency helplines directory.</p>
+          <div class="project-tech"><span>React</span><span>Node.js</span><span>MongoDB</span><span>Python</span><span>Groq AI</span><span>Vercel</span></div>
+        </div>
+        <div class="project-links-col">
+          <span class="proj-badge">Full-Stack</span>
+          <a href="https://github.com/ayushcmd/india-crime-analytics" target="_blank" class="proj-link">↗ GitHub</a>
+          <a href="https://india-crime-analytics.vercel.app" target="_blank" class="proj-link">↗ Live Demo</a>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <div>
+          <h3>FitoGlobe — AI Fitness Tracker</h3>
+          <p class="project-desc">Multilingual AI fitness companion supporting 4 languages (EN / ES / JA / KO) with auto-detected units (kg/lbs) by country. Tracks workouts, logs nutrition with macro calculator, and delivers personalized coaching via Groq AI chatbot and food scanner. Full authentication with JWT + Google OAuth.</p>
+          <div class="project-tech"><span>React + Vite</span><span>Node.js</span><span>PostgreSQL</span><span>Prisma</span><span>Groq AI</span><span>Google OAuth</span></div>
+        </div>
+        <div class="project-links-col">
+          <span class="proj-badge">Full-Stack</span>
+          <a href="https://github.com/ayushcmd/fitoglobe" target="_blank" class="proj-link">↗ GitHub</a>
+          <a href="https://fitoglobe.vercel.app" target="_blank" class="proj-link">↗ Live Demo</a>
+        </div>
+      </div>
+    </div>
   </section>
 <section id="contact" class="section">
   <div class="section-label">Get in touch</div>
@@ -304,8 +352,9 @@
           <div class="opento-desc">Open source, hackathons, team builds</div>
         </div>
       </div>
-    </div>
-  </div>
+        </div>
+      </div>
+
 
   <!-- BLOCK 3: Contact Details -->
   <div class="contact-block">
@@ -365,7 +414,6 @@
 </div>
   </div>
 
-  <a href="#" class="btn-ghost" data-section="home" style="margin-top:40px;">← Back to Home</a>
 </section>
   
 </main>
@@ -404,7 +452,11 @@
 </div>
 
 
-  <!-- Script -->
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  
+  <script src="3d-effect.js"></script>
+  
   <script src="script.js"></script>
 </body>
 </html>

@@ -8,38 +8,66 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-    :root{--ink:#08080d;--ink2:#111118;--ink3:#1a1a24;--amber:#f5a623;--mint:#00ffa3;--text:#c8c8d8;--text-dim:#5a5a72;--white:#f0f0f8}
+    :root{
+      --ink:#08080d;--ink2:#111118;--ink3:#1a1a24;
+      --amber:#cc0000;--amber-dim:#6b000d;--red-btn:#ff1a2e;
+      --mint:#00ffa3;--mint-dim:#007a4d;
+      --text:#c8c8d8;--text-dim:#5a5a72;--white:#f0f0f8
+    }
     body{font-family:'JetBrains Mono',monospace;background:var(--ink);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
 
     #grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
       background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);
-      background-size:48px 48px}
+      background-size:48px 48px;
+      mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 40%,transparent 100%)}
+
+    #glow-blob{position:fixed;top:50%;left:50%;width:600px;height:600px;border-radius:50%;pointer-events:none;z-index:0;
+      background:radial-gradient(circle,rgba(204,0,0,.05) 0%,transparent 70%);
+      transform:translate(-50%,-50%)}
 
     .container{position:relative;z-index:1;text-align:center;padding:40px 24px;max-width:560px}
 
-    .err-code{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(6rem,18vw,10rem);line-height:1;color:var(--ink2);letter-spacing:-0.05em;position:relative;display:inline-block}
-    .err-code::after{content:'404';position:absolute;inset:0;color:transparent;-webkit-text-stroke:1px rgba(245,166,35,0.3)}
+    /* Giant 404 — outline style matching brand */
+    .err-code{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(6rem,18vw,10rem);line-height:1;letter-spacing:-0.05em;position:relative;display:inline-block;
+      color:transparent;
+      -webkit-text-stroke:1.5px rgba(204,0,0,0.35)}
+    .err-code .filled{
+      position:absolute;inset:0;
+      color:var(--ink2);
+      -webkit-text-stroke:0;
+      font-family:'Syne',sans-serif;font-weight:800;font-size:inherit;letter-spacing:inherit}
 
-    .err-label{font-size:0.62rem;color:var(--amber);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:16px;margin-top:-8px}
+    .err-label{font-size:0.62rem;color:var(--amber);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:16px;margin-top:4px;
+      display:flex;align-items:center;justify-content:center;gap:12px}
+    .err-label::before,.err-label::after{content:'';width:32px;height:1px;background:var(--amber-dim)}
 
     .err-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.6rem,4vw,2.4rem);color:var(--white);letter-spacing:-0.03em;margin-bottom:8px}
     .err-title em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--amber)}
 
-    .err-desc{font-size:0.78rem;color:var(--text-dim);line-height:1.8;margin-bottom:40px;max-width:400px;margin-left:auto;margin-right:auto}
+    .err-desc{font-size:0.78rem;color:var(--text-dim);line-height:1.8;margin-bottom:32px;max-width:400px;margin-left:auto;margin-right:auto}
 
-    .err-terminal{background:var(--ink2);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:20px 24px;margin-bottom:36px;text-align:left;font-size:0.75rem}
-    .err-terminal .t-line{margin-bottom:6px}
-    .err-terminal .t-prompt{color:var(--mint)}
-    .err-terminal .t-cmd{color:var(--amber)}
-    .err-terminal .t-out{color:var(--text-dim);padding-left:16px}
-    .err-terminal .t-err{color:#ff6b6b;padding-left:16px}
+    /* Terminal block */
+    .err-terminal{background:var(--ink2);border:1px solid rgba(255,255,255,0.07);border-left:3px solid var(--amber-dim);border-radius:10px;padding:20px 24px;margin-bottom:36px;text-align:left;font-size:0.75rem}
+    .t-line{margin-bottom:6px;display:flex;gap:8px}
+    .t-line:last-child{margin-bottom:0}
+    .t-prompt{color:var(--mint);flex-shrink:0}
+    .t-cmd{color:var(--white)}
+    .t-path{color:var(--amber)}
+    .t-out{color:var(--text-dim);padding-left:20px}
+    .t-err{color:#ff6b6b;padding-left:20px}
 
+    /* Buttons — matching main portfolio exactly */
     .err-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 
-    .btn-primary{font-family:'JetBrains Mono',monospace;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;padding:12px 24px;background:var(--amber);color:var(--ink);border:none;border-radius:4px;text-decoration:none;font-weight:600;transition:all 0.25s}
-    .btn-primary:hover{background:var(--white);transform:translateY(-2px)}
+    .btn-primary{font-family:'JetBrains Mono',monospace;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;
+      padding:12px 24px;background:var(--red-btn);color:var(--white);
+      border:none;border-radius:4px;text-decoration:none;font-weight:600;
+      transition:all 0.25s;display:inline-flex;align-items:center;gap:8px}
+    .btn-primary:hover{background:var(--white);color:var(--ink);transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,26,46,.35)}
 
-    .btn-ghost{font-family:'JetBrains Mono',monospace;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;padding:12px 24px;background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.12);border-radius:4px;text-decoration:none;font-weight:400;transition:all 0.25s}
+    .btn-ghost{font-family:'JetBrains Mono',monospace;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;
+      padding:12px 24px;background:transparent;color:var(--text);
+      border:1px solid rgba(255,255,255,.12);border-radius:4px;text-decoration:none;font-weight:400;transition:all 0.25s}
     .btn-ghost:hover{border-color:var(--mint);color:var(--mint)}
 
     /* Blinking cursor */
@@ -49,16 +77,24 @@
 </head>
 <body>
 <div id="grid-bg"></div>
+<div id="glow-blob"></div>
 
 <div class="container">
   <div class="err-code">404</div>
   <div class="err-label">Error · Page not found</div>
   <h1 class="err-title">Lost in the<br><em>void.</em></h1>
-  
 
   <div class="err-terminal">
-    <div class="t-line t-err">The page you're looking for doesn't exist, was moved, or the URL is incorrect.</div>
-   
+    <div class="t-line">
+      <span class="t-prompt">→</span>
+      <span class="t-cmd">GET <span class="t-path" id="pathname">/unknown</span></span>
+    </div>
+    <div class="t-line">
+      <span class="t-err">404 — Route not found. Page may have moved or never existed.</span>
+    </div>
+    <div class="t-line">
+      <span class="t-out">Try navigating home or checking the URL.<span class="cursor"></span></span>
+    </div>
   </div>
 
   <div class="err-actions">
@@ -68,9 +104,8 @@
 </div>
 
 <script>
-  // Show the actual bad path in terminal
   const p = window.location.pathname.split('/').pop() || 'this-page';
-  document.getElementById('pathname').textContent = p;
+  document.getElementById('pathname').textContent = '/' + p;
 </script>
 </body>
 </html>

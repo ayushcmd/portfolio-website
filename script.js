@@ -1,13 +1,6 @@
-// ============================================
-//   Ayush Raj Portfolio — Script
-//   Features: Custom cursor, SPA nav,
-//             Typewriter, Skills tabs, Mobile menu
-// ============================================
-
 // ── CUSTOM CURSOR ────────────────────────────
 const dot  = document.getElementById('cursor-dot');
 const ring = document.getElementById('cursor-ring');
-const blob = document.getElementById('glow-blob');
 
 document.addEventListener('mousemove', e => {
   dot.style.left = e.clientX + 'px';
@@ -18,10 +11,6 @@ document.addEventListener('mousemove', e => {
     ring.style.left = e.clientX + 'px';
     ring.style.top  = e.clientY + 'px';
   }, 60);
-
-  // Ambient glow follows cursor (slow ease)
-  blob.style.left = e.clientX + 'px';
-  blob.style.top  = e.clientY + 'px';
 });
 
 // Cursor scales on interactive elements
@@ -181,3 +170,127 @@ enqSubmit.addEventListener('click', async () => {
   enqSubmit.textContent = 'Send ↗';
   enqSubmit.disabled    = false;
 });
+
+// ── SCROLL PROGRESS BAR ──────────────────────
+const progressBar = document.getElementById('scroll-progress');
+const mainEl = document.querySelector('.main');
+
+function updateProgress() {
+  const scrollTop = mainEl.scrollTop;
+  const scrollHeight = mainEl.scrollHeight - mainEl.clientHeight;
+  const pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+  progressBar.style.width = pct + '%';
+}
+
+mainEl.addEventListener('scroll', updateProgress, { passive: true });
+// Reset progress on section switch  
+document.querySelectorAll('[data-section]').forEach(link => {
+  link.addEventListener('click', () => setTimeout(updateProgress, 80));
+});
+
+
+// ── KEYBOARD NAVIGATION ──────────────────────
+const sectionKeys = { '1': 'home', '2': 'about', '3': 'skills', '4': 'projects', '5': 'contact' };
+
+document.addEventListener('keydown', e => {
+  // Don't fire when typing in inputs
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (sectionKeys[e.key]) {
+    navigate(sectionKeys[e.key]);
+    // Flash the keyboard hint
+    const hint = document.getElementById('keyboard-hint');
+    if (hint) {
+      hint.style.opacity = '1';
+      hint.style.color = 'var(--amber)';
+      setTimeout(() => {
+        hint.style.opacity = '0.5';
+        hint.style.color = '';
+      }, 600);
+    }
+  }
+});
+
+
+// ── GITHUB ACTIVITY FEED ─────────────────────
+async function loadGithubActivity() {
+  const container = document.getElementById('gh-events');
+  if (!container) return;
+
+  try {
+    const res = await fetch('https://api.github.com/users/ayushcmd/events/public?per_page=15');
+    if (!res.ok) throw new Error('API error');
+    const events = await res.json();
+
+    const iconMap = {
+      PushEvent: '↑',
+      CreateEvent: '+',
+      WatchEvent: '★',
+      ForkEvent: '⑂',
+      PullRequestEvent: '⤷',
+      IssuesEvent: '!',
+      DeleteEvent: '×',
+    };
+
+    const rendered = [];
+
+    for (const ev of events) {
+      if (rendered.length >= 5) break;
+
+      let text = '';
+      let icon = iconMap[ev.type] || '·';
+      const repo = ev.repo.name.replace('ayushcmd/', '');
+
+      if (ev.type === 'PushEvent') {
+        const msg = ev.payload.commits?.[0]?.message?.split('\n')[0] || 'pushed commits';
+        const count = ev.payload.size || 1;
+        text = `pushed ${count} commit${count > 1 ? 's' : ''} to <strong>${repo}</strong> — ${msg.length > 52 ? msg.slice(0, 52) + '…' : msg}`;
+      } else if (ev.type === 'CreateEvent') {
+        const ref = ev.payload.ref || ev.payload.ref_type;
+        text = `created ${ev.payload.ref_type} <strong>${ref || repo}</strong>${ev.payload.ref_type === 'repository' ? '' : ` in <strong>${repo}</strong>`}`;
+      } else if (ev.type === 'WatchEvent') {
+        text = `starred <strong>${repo}</strong>`;
+      } else if (ev.type === 'ForkEvent') {
+        text = `forked <strong>${repo}</strong>`;
+      } else if (ev.type === 'PullRequestEvent') {
+        text = `${ev.payload.action} PR in <strong>${repo}</strong>: ${(ev.payload.pull_request?.title || '').slice(0, 50)}`;
+      } else {
+        continue; // skip uninteresting event types
+      }
+
+      const date = new Date(ev.created_at);
+      const ago = getRelativeTime(date);
+
+      rendered.push({ icon, text, ago, repo });
+    }
+
+    if (rendered.length === 0) {
+      container.innerHTML = '<div class="gh-error">No recent public activity.</div>';
+      return;
+    }
+
+    container.innerHTML = rendered.map(ev => `
+      <div class="gh-event">
+        <span class="gh-event-icon">${ev.icon}</span>
+        <div class="gh-event-body">
+          <div class="gh-event-text">${ev.text}</div>
+          <div class="gh-event-meta">${ev.ago}</div>
+        </div>
+      </div>
+    `).join('');
+
+  } catch (err) {
+    document.getElementById('gh-events').innerHTML =
+      '<div class="gh-error">Could not load activity — check back later.</div>';
+  }
+}
+
+function getRelativeTime(date) {
+  const diff = Math.floor((Date.now() - date) / 1000);
+  if (diff < 60) return `${diff}s ago`;
+  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+  return `${Math.floor(diff / 86400)}d ago`;
+}
+
+// Load when page is ready
+loadGithubActivity();

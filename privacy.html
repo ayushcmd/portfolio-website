@@ -8,49 +8,60 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-    :root{--ink:#08080d;--ink2:#111118;--ink3:#1a1a24;--amber:#f5a623;--mint:#00ffa3;--text:#c8c8d8;--text-dim:#5a5a72;--white:#f0f0f8}
+    :root{
+      --ink:#08080d;--ink2:#111118;--ink3:#1a1a24;
+      --amber:#cc0000;--amber-dim:#6b000d;--red-btn:#ff1a2e;
+      --mint:#00ffa3;--mint-dim:#007a4d;
+      --text:#c8c8d8;--text-dim:#5a5a72;--white:#f0f0f8
+    }
     body{font-family:'JetBrains Mono',monospace;background:var(--ink);color:var(--text);min-height:100vh;padding:0}
 
-    /* GRID BG */
     #grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
       background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);
       background-size:48px 48px;
       mask-image:radial-gradient(ellipse 80% 80% at 50% 30%,black 40%,transparent 100%)}
 
-    /* TOPBAR */
+    #glow-blob{position:fixed;top:0;left:50%;width:500px;height:500px;border-radius:50%;pointer-events:none;z-index:0;
+      background:radial-gradient(circle,rgba(204,0,0,.04) 0%,transparent 70%);
+      transform:translateX(-50%)}
+
     .topbar{position:sticky;top:0;background:var(--ink2);border-bottom:1px solid rgba(255,255,255,0.06);padding:16px 48px;display:flex;justify-content:space-between;align-items:center;z-index:100}
     .topbar-brand{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:var(--white);text-decoration:none}
-    .topbar-back{font-size:0.7rem;color:var(--amber);text-decoration:none;letter-spacing:0.08em;transition:color 0.2s}
+    .topbar-back{font-size:0.7rem;color:var(--amber);text-decoration:none;letter-spacing:0.08em;transition:color 0.2s;display:flex;align-items:center;gap:6px}
     .topbar-back:hover{color:var(--white)}
 
-    /* CONTENT */
     .wrapper{max-width:760px;margin:0 auto;padding:64px 48px 96px;position:relative;z-index:1}
 
-    .pp-eyebrow{font-size:0.62rem;color:var(--mint);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:16px}
+    .pp-eyebrow{font-size:0.62rem;color:var(--mint);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+    .pp-eyebrow::after{content:'';flex:1;max-width:60px;height:1px;background:var(--amber-dim)}
     .pp-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,4vw,3rem);color:var(--white);letter-spacing:-0.03em;line-height:1;margin-bottom:8px}
     .pp-title em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--amber)}
     .pp-meta{font-size:0.68rem;color:var(--text-dim);margin-bottom:48px}
 
-    .pp-section{margin-bottom:40px;background:var(--ink2);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:28px 32px}
-    .pp-section-title{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--mint);margin-bottom:16px}
-    .pp-section h3{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:12px}
+    .pp-section{margin-bottom:20px;background:var(--ink2);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:28px 32px;position:relative;overflow:hidden;transition:border-color 0.25s}
+    .pp-section::before{content:'';position:absolute;left:0;top:0;height:100%;width:3px;background:var(--amber);opacity:0;transition:opacity 0.25s}
+    .pp-section:hover{border-color:rgba(204,0,0,0.2)}
+    .pp-section:hover::before{opacity:1}
+    .pp-section-title{font-size:0.58rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--mint);margin-bottom:14px}
+    .pp-section h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--white);margin-bottom:12px;letter-spacing:-0.01em}
     .pp-section p{font-size:0.78rem;color:var(--text);line-height:1.9;margin-bottom:12px}
     .pp-section p:last-child{margin-bottom:0}
     .pp-section ul{padding-left:0;list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:8px}
-    .pp-section ul li{font-size:0.78rem;color:var(--text);line-height:1.7;padding-left:16px;position:relative}
+    .pp-section ul li{font-size:0.78rem;color:var(--text);line-height:1.7;padding-left:18px;position:relative}
     .pp-section ul li::before{content:'→';position:absolute;left:0;color:var(--amber);font-size:0.7rem}
-    .pp-section a{color:var(--amber);text-decoration:none}
-    .pp-section a:hover{text-decoration:underline}
+    .pp-section a{color:var(--amber);text-decoration:none;border-bottom:1px solid rgba(204,0,0,0.3);transition:border-color 0.2s}
+    .pp-section a:hover{border-color:var(--amber)}
 
-    .pp-highlight{background:rgba(245,166,35,0.06);border:1px solid rgba(245,166,35,0.2);border-radius:8px;padding:14px 18px;font-size:0.75rem;color:var(--text);margin-top:12px;line-height:1.7}
+    .pp-highlight{background:rgba(204,0,0,0.05);border:1px solid rgba(204,0,0,0.2);border-radius:8px;padding:14px 18px;font-size:0.75rem;color:var(--text);margin-top:12px;line-height:1.7}
 
-    /* FOOTER */
     .pp-footer{text-align:center;font-size:0.62rem;color:var(--text-dim);margin-top:48px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.05)}
     .pp-footer a{color:var(--amber);text-decoration:none}
+    .pp-footer a:hover{color:var(--white)}
   </style>
 </head>
 <body>
 <div id="grid-bg"></div>
+<div id="glow-blob"></div>
 
 <nav class="topbar">
   <a href="index.html" class="topbar-brand">Ayush Raj</a>
@@ -64,14 +75,14 @@
   <div class="pp-meta">Last updated: March 2025 &nbsp;·&nbsp; Effective immediately</div>
 
   <div class="pp-section">
-    <div class="pp-section-title"> overview</div>
+    <div class="pp-section-title">// overview</div>
     <h3>Who I am</h3>
     <p>This is the personal portfolio website of <strong style="color:var(--white)">Ayush Raj</strong>, a Computer Science &amp; Data Analytics undergraduate at IIT Patna. This website is built to share my academic background, technical skills, and projects.</p>
     <p>I am not a company. This is a personal website and I take your privacy seriously.</p>
   </div>
 
   <div class="pp-section">
-    <div class="pp-section-title"> data collected</div>
+    <div class="pp-section-title">// data collected</div>
     <h3>What data is collected</h3>
     <p>This website collects minimal data. The only data collection happens when you voluntarily submit the <strong style="color:var(--white)">Quick Enquiry form</strong>. When you submit the form, the following is collected:</p>
     <ul>
@@ -83,7 +94,7 @@
   </div>
 
   <div class="pp-section">
-    <div class="pp-section-title"> how it works</div>
+    <div class="pp-section-title">// how it works</div>
     <h3>How your data is processed</h3>
     <p>The enquiry form is powered by <a href="https://formspree.io" target="_blank">Formspree</a>, a third-party form handling service. When you submit the form:</p>
     <ul>
@@ -95,7 +106,7 @@
   </div>
 
   <div class="pp-section">
-    <div class="pp-section-title"> data usage</div>
+    <div class="pp-section-title">// data usage</div>
     <h3>How I use your data</h3>
     <p>Your submitted information is used <strong style="color:var(--white)">only</strong> to:</p>
     <ul>
@@ -106,13 +117,13 @@
   </div>
 
   <div class="pp-section">
-    <div class="pp-section-title"> data retention</div>
+    <div class="pp-section-title">// data retention</div>
     <h3>How long data is stored</h3>
     <p>Formspree stores form submissions on their platform. You can request deletion of your submission by emailing me directly. I do not store any personal data on my own servers — this is a static website with no database.</p>
   </div>
 
   <div class="pp-section">
-    <div class="pp-section-title"> your rights</div>
+    <div class="pp-section-title">// your rights</div>
     <h3>Your rights</h3>
     <p>You have the right to:</p>
     <ul>
@@ -124,13 +135,13 @@
   </div>
 
   <div class="pp-section">
-    <div class="pp-section-title"> external links</div>
+    <div class="pp-section-title">// external links</div>
     <h3>External links</h3>
     <p>This website contains links to external sites such as GitHub, Power BI, LinkedIn, LeetCode, and Codeforces. I am not responsible for the privacy practices of these external websites. Please review their individual privacy policies.</p>
   </div>
 
   <div class="pp-section">
-    <div class="pp-section-title"> contact</div>
+    <div class="pp-section-title">// contact</div>
     <h3>Questions about this policy</h3>
     <p>If you have any questions about this privacy policy, feel free to reach out:</p>
     <ul>

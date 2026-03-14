@@ -1,9 +1,3 @@
-/* ============================================
-   Ayush Raj Portfolio — Stylesheet
-   Design: The Grid Cartographer
-   Fonts: Syne + Instrument Serif + JetBrains Mono
-============================================ */
-
 *,*::before,*::after {
   margin:0;
   padding:0;
@@ -13,8 +7,9 @@
   --ink:#08080d;
   --ink2:#111118;
   --ink3:#1a1a24;
-  --amber:#f5a623;
-  --amber-dim:#a36b0f;
+  --amber:#cc0000;
+  --amber-dim:#6b000d;
+  --red-btn:#ff1a2e;
   --mint:#00ffa3;
   --mint-dim:#007a4d;
   --text:#c8c8d8;
@@ -47,7 +42,7 @@ body {
 #cursor-ring {
   width:32px;
   height:32px;
-  border:1.5px solid rgba(245,166,35,.45);
+  border:1.5px solid rgba(204,0,0,.45);
   border-radius:50%;
   position:fixed;
   z-index:9998;
@@ -55,35 +50,23 @@ body {
   transform:translate(-50%,-50%);
   transition:width .25s,height .25s,border-color .25s}
 
-#grid-bg {
+#ra-canvas {
   position:fixed;
   inset:0;
   z-index:0;
   pointer-events:none;
-  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
-  background-size:48px 48px;
-  mask-image:radial-gradient(ellipse 80% 80% at 60% 50%,black 40%,transparent 100%)}
-
-#glow-blob {
-  position:fixed;
-  width:600px;
-  height:600px;
-  border-radius:50%;
-  pointer-events:none;
-  z-index:0;
-  background:radial-gradient(circle,rgba(245,166,35,.07) 0%,transparent 70%);
-  transform:translate(-50%,-50%);
-  transition:left .6s ease,top .6s ease}
+  width:100vw;
+  height:100vh;}
 
 .sidebar-avatar {
   width: 72px;
   height: 72px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid rgba(245,166,35,0.4);
+  border: 2px solid rgba(204,0,0,0.4);
   margin-bottom: 16px;
   display: block;
-  box-shadow: 0 0 20px rgba(245,166,35,0.15);
+  box-shadow: 0 0 20px rgba(204,0,0,0.15);
   transition: border-color 0.3s;
 }
 
@@ -157,8 +140,8 @@ body {
 
 .sidebar-nav li a:hover,.sidebar-nav li a.active {
   color:var(--white);
-  background:rgba(245,166,35,.06);
-  border-color:rgba(245,166,35,.15)}
+  background:rgba(204,0,0,.03);
+  border-color:rgba(204,0,0,.2)}
 
 .sidebar-nav li a.active .nav-index,.sidebar-nav li a:hover .nav-index {
   color:var(--amber)}
@@ -320,8 +303,8 @@ to {
   letter-spacing:.08em;
   text-transform:uppercase;
   padding:14px 28px;
-  background:var(--amber);
-  color:var(--ink);
+  background:var(--red-btn);
+  color:var(--white);
   border:none;
   border-radius:4px;
   cursor:none;
@@ -335,7 +318,7 @@ to {
 .btn-primary:hover {
   background:var(--white);
   transform:translateY(-2px);
-  box-shadow:0 8px 24px rgba(245,166,35,.3)}
+  box-shadow:0 8px 24px rgba(255,26,46,.35)}
 
 .btn-ghost {
   font-family:'JetBrains Mono',monospace;
@@ -382,7 +365,7 @@ to {
   font-family:'Syne',sans-serif;
   font-size:1.6rem;
   font-weight:800;
-  color:var(--amber);
+  color:var(--white);
   line-height:1}
 
 .stat-label {
@@ -545,8 +528,8 @@ to {
 
 .skill-cat-btn:hover,.skill-cat-btn.active {
   color:var(--white);
-  border-color:rgba(245,166,35,.2);
-  background:rgba(245,166,35,.04)}
+  border-color:rgba(204,0,0,.2);
+  background:rgba(204,0,0,.04)}
 
 .skill-cat-btn.active .cat-dot {
   background:var(--amber);
@@ -602,7 +585,7 @@ to {
   transition:transform .2s}
 
 .skill-tag:hover {
-  border-color:rgba(245,166,35,.3);
+  border-color:rgba(204,0,0,.3);
   color:var(--white);
   z-index: 1000;
   transform:translateY(-2px)}
@@ -622,7 +605,7 @@ to {
   left: 50%;
   transform: translateX(-50%);
   background: var(--ink3);
-  border: 1px solid rgba(245,166,35,0.3);
+  border: 1px solid rgba(204,0,0,0.3);
   color: var(--text);
   font-size: 0.65rem;
   padding: 8px 12px;
@@ -691,8 +674,8 @@ to {
   transition:transform .3s ease}
 
 .project-item:hover {
-  border-color:rgba(245,166,35,.15);
-  background:rgba(245,166,35,.025);
+  border-color:rgba(204,0,0,.15);
+  background:rgba(204,0,0,.025);
   transform:translateX(4px)}
 
 .project-item:hover::before {
@@ -886,8 +869,8 @@ a {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: var(--amber);
-  color: var(--ink);
+  background: var(--red-btn);
+  color: var(--white);
   border: none;
   padding: 12px 20px;
   border-radius: 50px;
@@ -895,7 +878,7 @@ a {
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.06em;
-  box-shadow: 0 4px 24px rgba(245,166,35,0.4);
+  box-shadow: 0 4px 24px rgba(255,26,46,0.45);
   transition: all 0.3s ease;
   cursor: none;
 }
@@ -903,7 +886,7 @@ a {
 .enquiry-btn:hover {
   background: var(--white);
   transform: translateY(-3px);
-  box-shadow: 0 6px 32px rgba(245,166,35,0.6);
+  box-shadow: 0 6px 32px rgba(255,26,46,0.65);
 }
 
 .enquiry-form {
@@ -911,7 +894,7 @@ a {
   flex-direction: column;
   gap: 10px;
   background: var(--ink2);
-  border: 1px solid rgba(245,166,35,0.2);
+  border: 1px solid rgba(204,0,0,0.2);
   border-radius: 14px;
   padding: 20px;
   width: 300px;
@@ -963,12 +946,12 @@ a {
 
 .enquiry-form input:focus,
 .enquiry-form textarea:focus {
-  border-color: rgba(245,166,35,0.4);
+  border-color: rgba(204,0,0,0.4);
 }
 
 .enquiry-submit {
-  background: var(--amber);
-  color: var(--ink);
+  background: var(--red-btn);
+  color: var(--white);
   border: none;
   border-radius: 6px;
   padding: 10px;
@@ -1097,8 +1080,8 @@ a {
 }
 
 .contact-link-card:hover {
-  border-color: rgba(245,166,35,0.3);
-  background: rgba(245,166,35,0.04);
+  border-color: rgba(204,0,0,0.3);
+  background: rgba(204,0,0,0.04);
   transform: translateX(4px);
 }
 
@@ -1108,8 +1091,8 @@ a {
   width: 32px;
   height: 32px;
   border-radius: 6px;
-  background: rgba(245,166,35,0.08);
-  border: 1px solid rgba(245,166,35,0.15);
+  background: rgba(204,0,0,0.08);
+  border: 1px solid rgba(204,0,0,0.15);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1184,10 +1167,169 @@ a {
   color: var(--amber);
   padding: 4px 10px;
   border-radius: 4px;
-  border: 1px solid rgba(245,166,35,0.2);
+  border: 1px solid rgba(204,0,0,0.2);
   white-space: nowrap;
   opacity: 0;
   transition: opacity 0.2s;
   pointer-events: none;
 }
-.btn-resume:hover::after { opacity: 1; }4
+.btn-resume:hover::after { opacity: 1; }
+/* ── PROFICIENCY BADGES ─────────────────────── */
+.skill-tag[data-level="core"] { border-left: 3px solid var(--amber); }
+.skill-tag[data-level="learning"] { border-left: 3px solid var(--mint-dim); opacity: 0.8; }
+
+.skill-level-badge {
+  font-size: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin-left: 6px;
+  vertical-align: middle;
+  font-weight: 600;
+}
+.badge-core {
+  background: rgba(204,0,0,0.12);
+  color: var(--amber);
+  border: 1px solid rgba(204,0,0,0.25);
+}
+.badge-learning {
+  background: rgba(0,255,163,0.06);
+  color: var(--mint-dim);
+  border: 1px solid rgba(0,255,163,0.15);
+}
+
+/* ── CURRENTLY LEARNING ─────────────────────── */
+.currently-learning {
+  margin-top: 36px;
+  padding: 20px 24px;
+  background: var(--ink2);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 10px;
+  border-left: 3px solid var(--mint-dim);
+}
+.currently-learning-title {
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--mint);
+  margin-bottom: 14px;
+}
+.learning-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.learning-chip {
+  font-size: 0.7rem;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: rgba(0,255,163,0.04);
+  border: 1px solid rgba(0,255,163,0.15);
+  color: var(--mint-dim);
+  letter-spacing: 0.03em;
+}
+
+/* ── SCROLL PROGRESS BAR ────────────────────── */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--amber-dim), var(--amber), var(--red-btn));
+  z-index: 9999;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px rgba(204,0,0,0.5);
+}
+
+/* ── KEYBOARD HINT ──────────────────────────── */
+.keyboard-hint {
+  margin-top: 40px;
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+.keyboard-hint kbd {
+  display: inline-block;
+  padding: 2px 6px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 3px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  color: var(--text);
+  background: var(--ink2);
+  margin: 0 1px;
+}
+.keyboard-hint:hover { opacity: 1; }
+
+/* ── GITHUB ACTIVITY FEED ───────────────────── */
+.github-activity {
+  margin-top: 36px;
+  max-width: 600px;
+}
+.gh-activity-title {
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--amber);
+  margin-bottom: 12px;
+}
+.gh-events {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.gh-loading {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+}
+.gh-event {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--ink2);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 6px;
+  transition: border-color 0.2s;
+  animation: fadeSlide 0.3s ease forwards;
+}
+.gh-event:hover {
+  border-color: rgba(204,0,0,0.2);
+}
+.gh-event-icon {
+  font-size: 0.7rem;
+  color: var(--amber);
+  flex-shrink: 0;
+  margin-top: 1px;
+  width: 14px;
+  text-align: center;
+}
+.gh-event-body {
+  flex: 1;
+  min-width: 0;
+}
+.gh-event-text {
+  font-size: 0.72rem;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.gh-event-text strong {
+  color: var(--white);
+  font-weight: 500;
+}
+.gh-event-meta {
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+.gh-error {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  padding: 8px 0;
+}
